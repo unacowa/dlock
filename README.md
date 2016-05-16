@@ -3,6 +3,8 @@
 
 dlock - Easy to use, Distributed lock manager, written in Go.
 
+[![Build Status](https://travis-ci.org/unacowa/dlock.svg?branch=master)](https://travis-ci.org/unacowa/dlock)
+
 ## Description
 
 'dlock' provides command line tool to use for acquire distributed lock.
@@ -48,18 +50,38 @@ GLOBAL OPTIONS:
    --version, -v			print the version
 ```
 
-## Example
+## Install (on linux amd64)
+
 ```
-# first create database table.
-$ ./lock --table table-name create-table
-# run command with distributed lock.
-$ ./lock --table table-name run --domain my-batch my-important-exec --some=any
-$ ./lock --table table-name run --domain my-batch bash -c 'sleep 10; echo 10' 
+$ curl -L https://github.com/unacowa/dlock/releases/download/pre-release/linux_amd64_dlock -o dlock
+$ chmod +x dlock
+$ sudo cp dlock /usr/local/bin
 ```
 
-## Credential
+## Example
+
+### Step 1: setup credential in ENV.
+```
+$ export AWS_ACCESS_KEY_ID=AKIxxxxxxxxxxxxxxxxx
+$ export AWS_SECRET_ACCESS_KEY=Kxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+### Step 2: create table. (Maybe wait a seconds for created) 
+```
+$ ./dlock --table dynamodb_go_lock create-table
+```
+
+### Step 3: run
+```
+$ ./dlock --table dynamodb_go_lock run --domain example bash -c 'sleep 3; echo One' & ./dlock --table dynamodb_go_lock run --domain example bash -c 'sleep 3; echo Two'
+failed acquire. transaction:fea09f48-c94b-4cb0-8b82-2479dee26564 running and not expires
+One
+```
+
+## Credential option
 Uses `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for access to AWS DynamoDB.
-Both are passed from `ENV` or `GLOBAL OPTION`.
+
+Both are passed from `ENVIRONMENT` or `GLOBAL OPTION`.
 
 
 ## Contribution
