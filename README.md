@@ -1,14 +1,13 @@
 
-DynamoDB lock Go (dlock)
-==================
+## NAME
 
-Easy to use, Distributed lock manager, written in Go.
+dlock - Easy to use, Distributed lock manager, written in Go.
 
 ## Description
 
-Command line tool, and Go library to use for acquire distributed lock.
+'dlock' provides command line tool to use for acquire distributed lock.
 
-Focus on..
+Focused on..
 
 * Easy to use. One binary, No deploy, Only cloud.
 * Configuration free.
